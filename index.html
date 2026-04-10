@@ -3,51 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>simPRO Daily Job Dashboard</title>
+  <title>CHS Job Dashboard</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #ffffff;
-      --bg-sec:    #f5f5f4;
-      --bg-ter:    #f0efeb;
-      --text:      #1a1a18;
-      --text-sec:  #5f5e5a;
-      --text-ter:  #888780;
-      --border:    rgba(0,0,0,0.12);
-      --border-md: rgba(0,0,0,0.22);
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --info-bg:   #e6f1fb;
-      --info-text: #185fa5;
-      --info-bdr:  #85b7eb;
-      --warn-bg:   #faeeda;
-      --warn-text: #854f0b;
-      --success-bg:#eaf3de;
-      --success-text:#3b6d11;
-      --danger-bg: #fcebeb;
-      --danger-text:#a32d2d;
+      --bg:           #ffffff;
+      --bg-sec:       #f5f5f4;
+      --bg-ter:       #f0efeb;
+      --text:         #1a1a18;
+      --text-sec:     #5f5e5a;
+      --text-ter:     #9a9890;
+      --border:       rgba(0,0,0,0.10);
+      --border-md:    rgba(0,0,0,0.20);
+      --radius-md:    8px;
+      --radius-lg:    12px;
+      --info-bg:      #e6f1fb;
+      --info-text:    #185fa5;
+      --info-bdr:     #85b7eb;
+      --warn-bg:      #faeeda;
+      --warn-text:    #854f0b;
+      --success-bg:   #eaf3de;
+      --success-text: #3b6d11;
+      --danger-bg:    #fcebeb;
+      --danger-text:  #a32d2d;
+      --purple-bg:    #eeedfe;
+      --purple-text:  #534ab7;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg:        #1e1e1c;
-        --bg-sec:    #2a2a28;
-        --bg-ter:    #242422;
-        --text:      #f0efeb;
-        --text-sec:  #b4b2a9;
-        --text-ter:  #888780;
-        --border:    rgba(255,255,255,0.1);
-        --border-md: rgba(255,255,255,0.2);
-        --info-bg:   #0c447c;
-        --info-text: #b5d4f4;
-        --info-bdr:  #378add;
-        --warn-bg:   #633806;
-        --warn-text: #fac775;
-        --success-bg:#27500a;
-        --success-text:#c0dd97;
-        --danger-bg: #791f1f;
-        --danger-text:#f7c1c1;
+        --bg:           #1e1e1c;
+        --bg-sec:       #2a2a28;
+        --bg-ter:       #242422;
+        --text:         #f0efeb;
+        --text-sec:     #b4b2a9;
+        --text-ter:     #6a6864;
+        --border:       rgba(255,255,255,0.08);
+        --border-md:    rgba(255,255,255,0.16);
+        --info-bg:      #0c447c;
+        --info-text:    #b5d4f4;
+        --info-bdr:     #378add;
+        --warn-bg:      #633806;
+        --warn-text:    #fac775;
+        --success-bg:   #27500a;
+        --success-text: #c0dd97;
+        --danger-bg:    #791f1f;
+        --danger-text:  #f7c1c1;
+        --purple-bg:    #3c3489;
+        --purple-text:  #cecbf6;
       }
     }
 
@@ -60,9 +64,8 @@
       min-height: 100vh;
     }
 
-    /* ── Layout ── */
     .shell {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
       background: var(--bg);
       min-height: 100vh;
@@ -70,7 +73,6 @@
       border-right: 0.5px solid var(--border);
     }
 
-    /* ── Top bar ── */
     .top-bar {
       display: flex;
       align-items: center;
@@ -80,60 +82,59 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-    .top-bar h1 { font-size: 17px; font-weight: 500; }
+    .top-bar h1   { font-size: 17px; font-weight: 500; }
     .top-bar .sub { font-size: 12px; color: var(--text-sec); margin-top: 2px; }
-    .top-right { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .top-right    { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .last-updated { font-size: 11px; color: var(--text-ter); }
 
-    /* ── Upload zone ── */
     .upload-section {
-      padding: 16px 20px;
+      padding: 14px 20px;
       border-bottom: 0.5px solid var(--border);
     }
     .upload-label { font-size: 12px; color: var(--text-sec); margin-bottom: 8px; font-weight: 500; }
     .drop-zone {
       border: 1.5px dashed var(--border-md);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px 20px;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
       background: var(--bg-sec);
+      transition: border-color 0.15s, background 0.15s;
     }
-    .drop-zone:hover, .drop-zone.drag-over {
-      border-color: var(--info-text);
-      background: var(--info-bg);
-    }
-    .drop-zone.loaded {
-      border-style: solid;
-      border-color: var(--success-text);
-      background: var(--success-bg);
-    }
-    .drop-zone p { font-size: 13px; color: var(--text-sec); }
-    .drop-zone .hint { font-size: 11px; color: var(--text-ter); margin-top: 4px; }
+    .drop-zone:hover, .drop-zone.drag-over { border-color: var(--info-text); background: var(--info-bg); }
+    .drop-zone.loaded { border-style: solid; border-color: var(--success-text); background: var(--success-bg); }
+    .drop-zone p    { font-size: 13px; color: var(--text-sec); }
+    .drop-zone small{ font-size: 11px; color: var(--text-ter); margin-top: 3px; display: block; }
     .drop-zone.loaded p { color: var(--success-text); font-weight: 500; }
     #file-input { display: none; }
 
-    /* ── Stats bar ── */
     .stats-bar {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
       padding: 14px 20px;
       border-bottom: 0.5px solid var(--border);
     }
-    .stat {
-      background: var(--bg-sec);
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-    }
+    .stat { background: var(--bg-sec); border-radius: var(--radius-md); padding: 10px 14px; }
     .stat-label { font-size: 11px; color: var(--text-sec); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.04em; }
-    .stat-value { font-size: 26px; font-weight: 500; }
-    .stat-value.danger { color: var(--danger-text); }
-    .stat-value.warn   { color: var(--warn-text); }
-    .stat-value.success{ color: var(--success-text); }
+    .stat-value { font-size: 24px; font-weight: 500; }
+    .stat-value.danger  { color: var(--danger-text); }
+    .stat-value.warn    { color: var(--warn-text); }
+    .stat-value.success { color: var(--success-text); }
+    .stat-value.info    { color: var(--info-text); }
 
-    /* ── Filters ── */
+    .overdue-banner {
+      display: none;
+      margin: 12px 20px 0;
+      padding: 10px 14px;
+      background: var(--danger-bg);
+      border: 0.5px solid #f09595;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--danger-text);
+    }
+    .overdue-banner.show { display: block; }
+
     .filters {
       display: flex;
       align-items: center;
@@ -145,178 +146,121 @@
     .filter-group { display: flex; align-items: center; gap: 7px; }
     .filter-group label { font-size: 12px; color: var(--text-sec); white-space: nowrap; }
     select {
-      font-size: 13px;
-      padding: 5px 9px;
+      font-size: 13px; padding: 5px 9px;
       border-radius: var(--radius-md);
       border: 0.5px solid var(--border-md);
-      background: var(--bg);
-      color: var(--text);
-      cursor: pointer;
+      background: var(--bg); color: var(--text); cursor: pointer;
     }
+
     .cat-pills { display: flex; gap: 6px; flex-wrap: wrap; }
     .pill {
-      padding: 4px 13px;
-      font-size: 12px;
+      padding: 4px 13px; font-size: 12px;
       border: 0.5px solid var(--border-md);
-      border-radius: 20px;
-      cursor: pointer;
-      background: transparent;
-      color: var(--text-sec);
-      transition: background 0.1s;
+      border-radius: 20px; cursor: pointer;
+      background: transparent; color: var(--text-sec);
     }
-    .pill.active-all    { background: var(--bg-sec);     color: var(--text);         border-color: var(--border-md); font-weight: 500; }
-    .pill.active-repair { background: #faece7;            color: #993c1d;              border-color: #f0997b; font-weight: 500; }
-    .pill.active-testing{ background: var(--info-bg);    color: var(--info-text);    border-color: var(--info-bdr); font-weight: 500; }
-    .pill.active-pm     { background: var(--success-bg); color: var(--success-text); border-color: #97c459; font-weight: 500; }
+    .pill.active { font-weight: 500; }
+    .pill[data-cat=""].active           { background: var(--bg-sec);     color: var(--text);          border-color: var(--border-md); }
+    .pill[data-cat="Internal"].active   { background: var(--info-bg);    color: var(--info-text);     border-color: var(--info-bdr); }
+    .pill[data-cat="Chargeable"].active { background: var(--warn-bg);    color: var(--warn-text);     border-color: #ef9f27; }
+    .pill[data-cat="Contract"].active   { background: var(--success-bg); color: var(--success-text);  border-color: #97c459; }
+    .pill[data-cat="Warranty"].active   { background: var(--purple-bg);  color: var(--purple-text);   border-color: #afa9ec; }
+    .pill[data-cat="Free"].active       { background: var(--danger-bg);  color: var(--danger-text);   border-color: #f09595; }
 
-    /* ── Sort row ── */
     .sort-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 20px;
-      border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 20px; border-bottom: 0.5px solid var(--border);
     }
     .sort-row .count { font-size: 12px; color: var(--text-ter); }
     .sort-group { display: flex; align-items: center; gap: 7px; }
     .sort-group label { font-size: 12px; color: var(--text-sec); }
 
-    /* ── Job list ── */
     .jobs-list {
       padding: 14px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
+      display: flex; flex-direction: column; gap: 9px;
     }
 
     .job-card {
       background: var(--bg);
       border: 0.5px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 12px 14px;
+      padding: 12px 14px 12px 16px;
       display: grid;
-      grid-template-columns: 10px 1fr auto;
+      grid-template-columns: 1fr auto;
       gap: 12px;
       align-items: start;
-      transition: border-color 0.1s;
+      border-left: 3px solid var(--border-md);
     }
     .job-card:hover { border-color: var(--border-md); }
-    .job-card.priority-high  { border-left: 3px solid #e24b4a; }
-    .job-card.priority-medium{ border-left: 3px solid #ef9f27; }
-    .job-card.priority-low   { border-left: 3px solid #639922; }
-
-    .priority-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-    .dot-high   { background: #e24b4a; }
-    .dot-medium { background: #ef9f27; }
-    .dot-low    { background: #639922; }
+    .job-card.urgent  { border-left-color: #e24b4a; }
+    .job-card.overdue { border-left-color: #ef9f27; }
+    .job-card.normal  { border-left-color: var(--border-md); }
 
     .job-meta { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
     .job-header { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-    .job-num   { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
-    .job-title { font-size: 13px; color: var(--text-sec); }
-    .job-addr  { font-size: 12px; color: var(--text-ter); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .job-tags  { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 2px; }
+    .job-num    { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
+    .job-title  { font-size: 13px; color: var(--text-sec); }
+    .job-detail { font-size: 12px; color: var(--text-ter); margin-top: 1px; }
+    .job-tags   { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 3px; }
 
-    .tag {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .tag-repair    { background: #faece7; color: #993c1d; }
-    .tag-testing   { background: var(--info-bg); color: var(--info-text); }
-    .tag-pm        { background: var(--success-bg); color: var(--success-text); }
-    .tag-high      { background: var(--danger-bg); color: var(--danger-text); }
-    .tag-progress  { background: var(--warn-bg); color: var(--warn-text); }
-    .tag-scheduled { background: var(--bg-sec); color: var(--text-sec); }
-    .tag-completed { background: var(--success-bg); color: var(--success-text); }
+    .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+    .tag-internal   { background: var(--info-bg);    color: var(--info-text); }
+    .tag-chargeable { background: var(--warn-bg);    color: var(--warn-text); }
+    .tag-contract   { background: var(--success-bg); color: var(--success-text); }
+    .tag-warranty   { background: var(--purple-bg);  color: var(--purple-text); }
+    .tag-free       { background: var(--danger-bg);  color: var(--danger-text); }
+    .tag-status     { background: var(--bg-sec);     color: var(--text-sec); }
+    .tag-urgent     { background: var(--danger-bg);  color: var(--danger-text); }
+    .tag-overdue    { background: var(--warn-bg);    color: var(--warn-text); }
 
     .job-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 5px;
-      flex-shrink: 0;
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 5px;
+      flex-shrink: 0; min-width: 120px;
     }
+    .tech-list { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
     .tech-badge {
-      font-size: 11px;
-      padding: 3px 9px;
+      font-size: 11px; padding: 2px 8px;
       border-radius: var(--radius-md);
-      background: var(--bg-sec);
-      color: var(--text-sec);
-      border: 0.5px solid var(--border);
-      white-space: nowrap;
+      background: var(--bg-sec); color: var(--text-sec);
+      border: 0.5px solid var(--border); white-space: nowrap;
     }
-    .job-time { font-size: 12px; color: var(--text-sec); }
+    .pm-badge {
+      font-size: 11px; padding: 2px 8px;
+      border-radius: var(--radius-md);
+      background: var(--bg-ter); color: var(--text-ter);
+      border: 0.5px solid var(--border); white-space: nowrap;
+    }
+    .date-info           { font-size: 11px; color: var(--text-ter); text-align: right; }
+    .date-info.due-soon  { color: var(--warn-text); font-weight: 500; }
+    .date-info.overdue   { color: var(--danger-text); font-weight: 500; }
+    .date-info.not-sched { color: var(--danger-text); }
 
     .empty {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-ter);
-      font-size: 13px;
+      text-align: center; padding: 40px 20px;
+      color: var(--text-ter); font-size: 13px;
     }
     .empty strong { display: block; font-size: 15px; font-weight: 500; color: var(--text-sec); margin-bottom: 6px; }
 
-    /* ── Buttons ── */
     .btn {
-      font-size: 12px;
-      padding: 5px 12px;
+      font-size: 12px; padding: 5px 12px;
       border: 0.5px solid var(--border-md);
       border-radius: var(--radius-md);
-      background: transparent;
-      color: var(--text-sec);
-      cursor: pointer;
+      background: transparent; color: var(--text-sec); cursor: pointer;
     }
     .btn:hover { background: var(--bg-sec); }
-    .btn-primary {
-      background: var(--info-bg);
-      color: var(--info-text);
-      border-color: var(--info-bdr);
-    }
+    .btn-primary { background: var(--info-bg); color: var(--info-text); border-color: var(--info-bdr); }
     .btn-primary:hover { opacity: 0.85; }
 
-    /* ── Column mapping modal ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--bg);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      width: 480px;
-      max-width: 95vw;
-      border: 0.5px solid var(--border-md);
-    }
-    .modal h2 { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-    .modal p  { font-size: 12px; color: var(--text-sec); margin-bottom: 16px; }
-    .map-grid { display: grid; grid-template-columns: 140px 1fr; gap: 8px 12px; align-items: center; margin-bottom: 16px; }
-    .map-grid .field-name { font-size: 12px; color: var(--text-sec); font-weight: 500; }
-    .map-grid select { width: 100%; }
-    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
-
-    /* ── Footer ── */
     footer {
       padding: 12px 20px;
       border-top: 0.5px solid var(--border);
-      font-size: 11px;
-      color: var(--text-ter);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
+      font-size: 11px; color: var(--text-ter);
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .job-card  { grid-template-columns: 10px 1fr; }
       .job-right { display: none; }
     }
   </style>
@@ -324,10 +268,9 @@
 <body>
 <div class="shell">
 
-  <!-- Top bar -->
   <div class="top-bar">
     <div>
-      <h1>simPRO daily job dashboard</h1>
+      <h1>CHS daily job dashboard</h1>
       <div class="sub" id="today-date"></div>
     </div>
     <div class="top-right">
@@ -337,37 +280,25 @@
     </div>
   </div>
 
-  <!-- Upload zone -->
   <div class="upload-section">
-    <div class="upload-label">simPRO export — drag & drop or click "Load CSV"</div>
+    <div class="upload-label">Export from simPRO → Jobs → filter pending → Export CSV</div>
     <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
-      <p id="drop-text">Drop your simPRO CSV export here</p>
-      <div class="hint" id="drop-hint">Exports from simPRO → Jobs → Export to CSV. Expected columns listed in README.md</div>
+      <p id="drop-text">Drop your simPRO pending jobs CSV here, or click "Load CSV"</p>
+      <small id="drop-hint">Columns: Created Date · Job · Technicians · Project Manager · Customer · Site · Scheduled · Status · Due Date · Charge category - CHS</small>
     </div>
     <input type="file" id="file-input" accept=".csv,.txt" onchange="handleFile(event)" />
   </div>
 
-  <!-- Stats -->
   <div class="stats-bar">
-    <div class="stat">
-      <div class="stat-label">Total jobs</div>
-      <div class="stat-value" id="s-total">—</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">High priority</div>
-      <div class="stat-value danger" id="s-high">—</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">In progress</div>
-      <div class="stat-value warn" id="s-progress">—</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Completed today</div>
-      <div class="stat-value success" id="s-done">—</div>
-    </div>
+    <div class="stat"><div class="stat-label">Total jobs</div><div class="stat-value" id="s-total">—</div></div>
+    <div class="stat"><div class="stat-label">Urgent</div><div class="stat-value danger" id="s-urgent">—</div></div>
+    <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value warn" id="s-overdue">—</div></div>
+    <div class="stat"><div class="stat-label">Unassigned</div><div class="stat-value info" id="s-unassigned">—</div></div>
+    <div class="stat"><div class="stat-label">Not scheduled</div><div class="stat-value" id="s-unscheduled">—</div></div>
   </div>
 
-  <!-- Filters -->
+  <div class="overdue-banner" id="overdue-banner"></div>
+
   <div class="filters">
     <div class="filter-group">
       <label>Technician</label>
@@ -376,91 +307,57 @@
       </select>
     </div>
     <div class="filter-group">
-      <label>Status</label>
-      <select id="status-filter" onchange="renderJobs()">
-        <option value="">All statuses</option>
+      <label>Job type</label>
+      <select id="type-filter" onchange="renderJobs()">
+        <option value="">All types</option>
       </select>
     </div>
-    <div class="cat-pills" id="cat-pills">
-      <button class="pill active-all" data-cat="" onclick="setCat(this)">All</button>
-      <button class="pill" data-cat="Repair" onclick="setCat(this)">Repair</button>
-      <button class="pill" data-cat="Testing" onclick="setCat(this)">Testing</button>
-      <button class="pill" data-cat="PM" onclick="setCat(this)">Prev. maintenance</button>
+    <div class="cat-pills">
+      <button class="pill active" data-cat=""           onclick="setCat(this)">All</button>
+      <button class="pill"        data-cat="Internal"   onclick="setCat(this)">Internal</button>
+      <button class="pill"        data-cat="Chargeable" onclick="setCat(this)">Chargeable</button>
+      <button class="pill"        data-cat="Contract"   onclick="setCat(this)">Contract</button>
+      <button class="pill"        data-cat="Warranty"   onclick="setCat(this)">Warranty</button>
+      <button class="pill"        data-cat="Free"       onclick="setCat(this)">Free of charge</button>
     </div>
   </div>
 
-  <!-- Sort row -->
   <div class="sort-row">
     <span class="count" id="job-count"></span>
     <div class="sort-group">
       <label>Sort by</label>
       <select id="sort-by" onchange="renderJobs()">
-        <option value="priority">Priority</option>
-        <option value="time">Scheduled time</option>
+        <option value="urgency">Urgency</option>
+        <option value="duedate">Due date</option>
+        <option value="created">Created date</option>
         <option value="jobnum">Job number</option>
         <option value="tech">Technician</option>
+        <option value="customer">Customer</option>
       </select>
     </div>
   </div>
 
-  <!-- Jobs -->
   <div class="jobs-list" id="jobs-list">
     <div class="empty">
       <strong>No jobs loaded</strong>
-      Load a simPRO CSV export using the button above or drag a file onto the upload zone.
+      Export your pending jobs from simPRO and load the CSV using the button above.
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
-    <span>simPRO Daily Dashboard — CSV mode</span>
-    <span>
-      <a href="https://github.com/your-org/simpro-dashboard" style="color:var(--text-ter)">GitHub</a>
-      &nbsp;·&nbsp;
-      <a href="README.md" style="color:var(--text-ter)">README</a>
-    </span>
+    <span>CHS Job Dashboard — Connected Healthcare Systems</span>
+    <span id="footer-count"></span>
   </footer>
 </div>
 
-<!-- Column mapping modal -->
-<div class="modal-overlay" id="map-modal">
-  <div class="modal">
-    <h2>Map CSV columns</h2>
-    <p>We couldn't auto-detect your simPRO column names. Match each field below to a column from your file, then click Apply.</p>
-    <div class="map-grid" id="map-grid"></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="applyMapping()">Apply mapping</button>
-    </div>
-  </div>
-</div>
-
 <script>
-// ── State ──────────────────────────────────────────────────────────────────
-let allJobs    = [];
-let activeCat  = '';
-let csvHeaders = [];
-let rawRows    = [];
+let allJobs   = [];
+let activeCat = '';
+const TODAY   = new Date(); TODAY.setHours(0,0,0,0);
 
-// Field definitions: internal key → display label → known simPRO header variants
-const FIELDS = [
-  { key: 'num',      label: 'Job number',     variants: ['job no','job number','job #','id','job id'] },
-  { key: 'title',    label: 'Job title',       variants: ['title','job title','description','subject','summary'] },
-  { key: 'cat',      label: 'Category',        variants: ['category','job category','type','job type','work type'] },
-  { key: 'tech',     label: 'Technician',      variants: ['technician','assigned to','tech','engineer','staff','contractor'] },
-  { key: 'time',     label: 'Scheduled time',  variants: ['scheduled time','schedule time','start time','time','scheduled start'] },
-  { key: 'date',     label: 'Scheduled date',  variants: ['scheduled date','schedule date','date','job date','start date'] },
-  { key: 'addr',     label: 'Site address',    variants: ['site address','address','location','site','customer address'] },
-  { key: 'status',   label: 'Status',          variants: ['status','job status','stage'] },
-  { key: 'priority', label: 'Priority',        variants: ['priority','urgency','importance'] },
-];
-
-// ── Init ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('today-date').textContent =
-    new Date().toLocaleDateString('en-NZ', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-  // Drag-drop
+    TODAY.toLocaleDateString('en-NZ', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
   const dz = document.getElementById('drop-zone');
   dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag-over'); });
   dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
@@ -471,7 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── File handling ──────────────────────────────────────────────────────────
 function handleFile(e) {
   const f = e.target.files[0];
   if (f) processFile(f);
@@ -485,87 +381,82 @@ function processFile(file) {
 }
 
 function parseCSV(text, filename) {
+  text = text.replace(/^\uFEFF/, '');
   const lines = text.trim().split(/\r?\n/);
-  if (lines.length < 2) { alert('CSV appears empty or has only a header row.'); return; }
+  if (lines.length < 2) { alert('CSV appears empty.'); return; }
 
-  csvHeaders = splitCSVLine(lines[0]).map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
-  rawRows    = lines.slice(1).filter(l => l.trim()).map(l =>
-    splitCSVLine(l).map(c => c.trim().replace(/^"|"$/g, ''))
-  );
+  const headers = splitLine(lines[0]).map(h => h.toLowerCase().trim());
+  const ci = key => headers.findIndex(h => h.includes(key));
 
-  // Auto-detect column mapping
-  const mapping = autoMap(csvHeaders);
+  const idx = {
+    created:  ci('created date'),
+    job:      ci('job'),
+    techs:    ci('technician'),
+    pm:       ci('project manager'),
+    customer: ci('customer'),
+    site:     ci('site'),
+    sched:    ci('scheduled'),
+    status:   ci('status'),
+    duedate:  ci('due date'),
+    charge:   ci('charge category'),
+  };
 
-  if (!mapping.num && !mapping.title) {
-    // Show manual mapping modal
-    showModal(filename);
-    return;
-  }
+  allJobs = lines.slice(1)
+    .filter(l => l.trim())
+    .map(l => {
+      const cols = splitLine(l);
+      const get  = key => idx[key] >= 0 ? (cols[idx[key]] || '').trim() : '';
 
-  applyMappingToRows(mapping, filename);
-}
+      const jobRaw  = get('job');
+      const dashIdx = jobRaw.indexOf(' - ');
+      const num     = dashIdx > -1 ? jobRaw.slice(0, dashIdx).trim() : jobRaw;
+      const title   = dashIdx > -1 ? jobRaw.slice(dashIdx + 3).trim() : '';
 
-function autoMap(headers) {
-  const mapping = {};
-  for (const field of FIELDS) {
-    const idx = headers.findIndex(h => field.variants.some(v => h === v || h.includes(v)));
-    if (idx !== -1) mapping[field.key] = idx;
-  }
-  return mapping;
-}
+      const techRaw = get('techs');
+      const techs   = techRaw ? techRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
 
-function applyMappingToRows(mapping, filename) {
-  allJobs = rawRows.map(cols => {
-    const get = key => mapping[key] !== undefined ? (cols[mapping[key]] || '').trim() : '';
-    return {
-      num:      get('num')      || '—',
-      title:    get('title')    || 'Untitled job',
-      cat:      normCat(get('cat')),
-      tech:     get('tech')     || 'Unassigned',
-      time:     get('time')     || '',
-      date:     get('date')     || '',
-      addr:     get('addr')     || '',
-      status:   normStatus(get('status')),
-      priority: normPriority(get('priority')),
-    };
-  }).filter(j => j.num !== '—' || j.title !== 'Untitled job');
+      const chargeRaw = get('charge');
+      const charge    = normCharge(chargeRaw);
+
+      const dueDateRaw = get('duedate');
+      const dueDate    = parseNZDate(dueDateRaw);
+
+      const schedRaw   = get('sched');
+      const schedClean = schedRaw.includes(' to ') ? schedRaw.split(' to ')[0] : schedRaw;
+      const schedDate  = parseNZDate(schedClean);
+
+      const createdDate = parseNZDate(get('created'));
+      const statusRaw   = get('status');
+      const isUrgent    = /urgent/i.test(title);
+      const isOverdue   = dueDate && dueDate < TODAY;
+      const isDueSoon   = dueDate && !isOverdue && daysUntil(dueDate) <= 7;
+
+      return {
+        num, title, techs,
+        pm:          get('pm'),
+        customer:    get('customer'),
+        site:        get('site'),
+        schedRaw, schedDate,
+        createdDate, createdRaw: get('created'),
+        statusRaw,
+        jobType:     normJobType(statusRaw),
+        dueDate, dueDateRaw,
+        charge, chargeRaw,
+        isUrgent, isOverdue, isDueSoon,
+        unassigned:  techs.length === 0,
+        unscheduled: !schedDate,
+      };
+    })
+    .filter(j => j.num);
 
   setLoaded(filename);
-  populateFilterDropdowns();
+  populateFilters();
   updateStats();
   renderJobs();
 }
 
-// ── Normalise values ───────────────────────────────────────────────────────
-function normCat(raw) {
-  const r = raw.toLowerCase();
-  if (r.includes('repair') || r.includes('fault') || r.includes('breakdown')) return 'Repair';
-  if (r.includes('test'))  return 'Testing';
-  if (r.includes('prev') || r.includes('pm') || r.includes('maintenance') || r.includes('service')) return 'PM';
-  return raw || 'Other';
-}
-
-function normStatus(raw) {
-  const r = raw.toLowerCase();
-  if (r.includes('progress') || r.includes('active') || r.includes('started')) return 'In progress';
-  if (r.includes('complet') || r.includes('done') || r.includes('closed'))      return 'Completed';
-  if (r.includes('schedul') || r.includes('pending') || r.includes('open'))     return 'Scheduled';
-  if (r.includes('cancel'))                                                       return 'Cancelled';
-  return raw || 'Scheduled';
-}
-
-function normPriority(raw) {
-  const r = raw.toLowerCase();
-  if (r.includes('high') || r.includes('urgent') || r.includes('critical') || r === '1') return 'High';
-  if (r.includes('low')  || r === '3') return 'Low';
-  if (r.includes('med')  || r === '2') return 'Medium';
-  return 'Medium';
-}
-
-// ── CSV parser (handles quoted fields) ────────────────────────────────────
-function splitCSVLine(line) {
-  const result = [];
-  let cur = '', inQ = false;
+function splitLine(line) {
+  const result = []; let cur = '', inQ = false;
   for (let i = 0; i < line.length; i++) {
     const ch = line[i];
     if (ch === '"' && !inQ) { inQ = true; continue; }
@@ -577,166 +468,201 @@ function splitCSVLine(line) {
   return result;
 }
 
-// ── Manual mapping modal ───────────────────────────────────────────────────
-let pendingFilename = '';
-function showModal(filename) {
-  pendingFilename = filename;
-  const grid = document.getElementById('map-grid');
-  grid.innerHTML = FIELDS.map(f => `
-    <span class="field-name">${f.label}</span>
-    <select id="map-${f.key}">
-      <option value="">— skip —</option>
-      ${csvHeaders.map((h, i) => `<option value="${i}">${h}</option>`).join('')}
-    </select>
-  `).join('');
-
-  // Pre-select best guess even if not perfect match
-  FIELDS.forEach(f => {
-    const sel = document.getElementById('map-' + f.key);
-    const idx = csvHeaders.findIndex(h => f.variants.some(v => h.includes(v)));
-    if (idx !== -1) sel.value = String(idx);
-  });
-
-  document.getElementById('map-modal').classList.add('open');
+function parseNZDate(str) {
+  if (!str || !str.trim()) return null;
+  const m = str.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) { const d = new Date(+m[3], +m[2]-1, +m[1]); d.setHours(0,0,0,0); return d; }
+  return null;
 }
 
-function closeModal() {
-  document.getElementById('map-modal').classList.remove('open');
+function daysUntil(date) {
+  return Math.round((date - TODAY) / 86400000);
 }
 
-function applyMapping() {
-  const mapping = {};
-  FIELDS.forEach(f => {
-    const val = document.getElementById('map-' + f.key).value;
-    if (val !== '') mapping[f.key] = parseInt(val, 10);
-  });
-  closeModal();
-  applyMappingToRows(mapping, pendingFilename);
+function normCharge(raw) {
+  const r = raw.toLowerCase();
+  if (r.includes('internal'))                       return 'Internal';
+  if (r.includes('chargeable') || r === 'charge')  return 'Chargeable';
+  if (r.includes('contract'))                       return 'Contract';
+  if (r.includes('warrant'))                        return 'Warranty';
+  if (r.includes('free') || r.includes('courtesy')) return 'Free';
+  return raw || 'Other';
 }
 
-// ── UI updates ─────────────────────────────────────────────────────────────
+function normJobType(raw) {
+  return raw.replace(/^Job\s*:\s*/i, '').trim() || 'New';
+}
+
 function setLoaded(filename) {
   const dz = document.getElementById('drop-zone');
   dz.classList.add('loaded');
-  document.getElementById('drop-text').textContent = `${allJobs.length} jobs loaded from ${filename}`;
-  document.getElementById('drop-hint').textContent = 'Drop another file to replace, or click "Clear" to reset.';
-  document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString('en-NZ', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById('drop-text').textContent =
+    `${allJobs.length} jobs loaded from ${filename}`;
+  document.getElementById('drop-hint').textContent =
+    'Drop another file to replace, or click "Clear" to reset.';
+  document.getElementById('last-updated').textContent =
+    'Updated ' + new Date().toLocaleTimeString('en-NZ', { hour:'2-digit', minute:'2-digit' });
 }
 
 function clearData() {
   allJobs = []; activeCat = '';
   const dz = document.getElementById('drop-zone');
   dz.classList.remove('loaded');
-  document.getElementById('drop-text').textContent = 'Drop your simPRO CSV export here';
-  document.getElementById('drop-hint').textContent = 'Exports from simPRO → Jobs → Export to CSV. Expected columns listed in README.md';
+  document.getElementById('drop-text').textContent  = 'Drop your simPRO pending jobs CSV here, or click "Load CSV"';
+  document.getElementById('drop-hint').textContent  = 'Columns: Created Date · Job · Technicians · Project Manager · Customer · Site · Scheduled · Status · Due Date · Charge category - CHS';
   document.getElementById('last-updated').textContent = '';
-  ['s-total','s-high','s-progress','s-done'].forEach(id => document.getElementById(id).textContent = '—');
-  document.getElementById('tech-filter').innerHTML   = '<option value="">All technicians</option>';
-  document.getElementById('status-filter').innerHTML = '<option value="">All statuses</option>';
-  document.getElementById('jobs-list').innerHTML = `
-    <div class="empty">
-      <strong>No jobs loaded</strong>
-      Load a simPRO CSV export using the button above or drag a file onto the upload zone.
-    </div>`;
-  document.getElementById('job-count').textContent = '';
+  document.getElementById('overdue-banner').classList.remove('show');
+  ['s-total','s-urgent','s-overdue','s-unassigned','s-unscheduled'].forEach(id =>
+    document.getElementById(id).textContent = '—');
+  document.getElementById('tech-filter').innerHTML  = '<option value="">All technicians</option>';
+  document.getElementById('type-filter').innerHTML  = '<option value="">All types</option>';
+  document.getElementById('jobs-list').innerHTML    =
+    '<div class="empty"><strong>No jobs loaded</strong>Export your pending jobs from simPRO and load the CSV.</div>';
+  document.getElementById('job-count').textContent    = '';
+  document.getElementById('footer-count').textContent = '';
   setCatByValue('');
 }
 
-function populateFilterDropdowns() {
-  const techs    = [...new Set(allJobs.map(j => j.tech))].sort();
-  const statuses = [...new Set(allJobs.map(j => j.status))].sort();
-
+function populateFilters() {
+  const techSet = new Set();
+  allJobs.forEach(j => j.techs.forEach(t => techSet.add(t)));
   document.getElementById('tech-filter').innerHTML =
     '<option value="">All technicians</option>' +
-    techs.map(t => `<option value="${t}">${t}</option>`).join('');
+    [...techSet].sort().map(t => `<option value="${t}">${t}</option>`).join('');
 
-  document.getElementById('status-filter').innerHTML =
-    '<option value="">All statuses</option>' +
-    statuses.map(s => `<option value="${s}">${s}</option>`).join('');
+  const types = [...new Set(allJobs.map(j => j.jobType))].sort();
+  document.getElementById('type-filter').innerHTML =
+    '<option value="">All types</option>' +
+    types.map(t => `<option value="${t}">${t}</option>`).join('');
 }
 
 function updateStats() {
-  document.getElementById('s-total').textContent    = allJobs.length;
-  document.getElementById('s-high').textContent     = allJobs.filter(j => j.priority === 'High').length;
-  document.getElementById('s-progress').textContent = allJobs.filter(j => j.status === 'In progress').length;
-  document.getElementById('s-done').textContent     = allJobs.filter(j => j.status === 'Completed').length;
+  const overdue    = allJobs.filter(j => j.isOverdue);
+  document.getElementById('s-total').textContent       = allJobs.length;
+  document.getElementById('s-urgent').textContent      = allJobs.filter(j => j.isUrgent).length;
+  document.getElementById('s-overdue').textContent     = overdue.length;
+  document.getElementById('s-unassigned').textContent  = allJobs.filter(j => j.unassigned).length;
+  document.getElementById('s-unscheduled').textContent = allJobs.filter(j => j.unscheduled).length;
+
+  const banner = document.getElementById('overdue-banner');
+  if (overdue.length > 0) {
+    banner.classList.add('show');
+    banner.textContent = `${overdue.length} job${overdue.length > 1 ? 's are' : ' is'} past due date: ` +
+      overdue.slice(0, 3).map(j => j.num).join(', ') +
+      (overdue.length > 3 ? ` and ${overdue.length - 3} more` : '');
+  } else {
+    banner.classList.remove('show');
+  }
 }
 
-// ── Category pills ─────────────────────────────────────────────────────────
 function setCat(btn) {
   activeCat = btn.dataset.cat;
-  document.querySelectorAll('.pill').forEach(b => b.className = 'pill');
-  const cls = activeCat === ''        ? 'active-all'
-            : activeCat === 'Repair'  ? 'active-repair'
-            : activeCat === 'Testing' ? 'active-testing'
-            : 'active-pm';
-  btn.classList.add(cls);
+  document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   renderJobs();
 }
 
 function setCatByValue(val) {
   activeCat = val;
   document.querySelectorAll('.pill').forEach(b => {
-    b.className = 'pill';
-    if (b.dataset.cat === val) b.classList.add('active-all');
+    b.classList.remove('active');
+    if (b.dataset.cat === val) b.classList.add('active');
   });
 }
 
-// ── Render ─────────────────────────────────────────────────────────────────
 function renderJobs() {
-  const tech   = document.getElementById('tech-filter').value;
-  const status = document.getElementById('status-filter').value;
-  const sort   = document.getElementById('sort-by').value;
-  const PRI    = { High: 0, Medium: 1, Low: 2 };
+  const tech = document.getElementById('tech-filter').value;
+  const type = document.getElementById('type-filter').value;
+  const sort = document.getElementById('sort-by').value;
 
   let jobs = allJobs
-    .filter(j => !tech   || j.tech   === tech)
-    .filter(j => !status || j.status === status)
-    .filter(j => !activeCat || j.cat === activeCat);
+    .filter(j => !tech      || j.techs.includes(tech))
+    .filter(j => !type      || j.jobType === type)
+    .filter(j => !activeCat || j.charge  === activeCat);
 
-  if (sort === 'priority') jobs.sort((a, b) => PRI[a.priority] - PRI[b.priority] || a.time.localeCompare(b.time));
-  else if (sort === 'time') jobs.sort((a, b) => a.time.localeCompare(b.time));
-  else if (sort === 'jobnum') jobs.sort((a, b) => a.num.localeCompare(b.num, undefined, { numeric: true }));
-  else if (sort === 'tech') jobs.sort((a, b) => a.tech.localeCompare(b.tech));
+  const urgencyScore = j =>
+    j.isUrgent ? 0 : j.isOverdue ? 1 : j.isDueSoon ? 2 : j.unassigned ? 3 : 4;
+
+  jobs.sort((a, b) => {
+    if (sort === 'urgency')  return urgencyScore(a) - urgencyScore(b) ||
+                                    (a.dueDate || new Date(9999,0)) - (b.dueDate || new Date(9999,0));
+    if (sort === 'duedate')  { if (!a.dueDate && !b.dueDate) return 0;
+                               if (!a.dueDate) return 1; if (!b.dueDate) return -1;
+                               return a.dueDate - b.dueDate; }
+    if (sort === 'created')  return (b.createdDate||0) - (a.createdDate||0);
+    if (sort === 'jobnum')   return b.num.localeCompare(a.num, undefined, { numeric:true });
+    if (sort === 'tech')     return (a.techs[0]||'zzz').localeCompare(b.techs[0]||'zzz');
+    if (sort === 'customer') return a.customer.localeCompare(b.customer);
+    return 0;
+  });
 
   document.getElementById('job-count').textContent =
     allJobs.length ? `Showing ${jobs.length} of ${allJobs.length} jobs` : '';
+  document.getElementById('footer-count').textContent =
+    allJobs.length ? `${allJobs.length} jobs total` : '';
 
   const el = document.getElementById('jobs-list');
-
   if (!jobs.length) {
-    el.innerHTML = `<div class="empty"><strong>No jobs match</strong>Try adjusting the filters above.</div>`;
+    el.innerHTML = '<div class="empty"><strong>No jobs match</strong>Try adjusting the filters above.</div>';
     return;
   }
 
-  const catTag = { Repair: 'tag-repair', Testing: 'tag-testing', PM: 'tag-pm' };
-  const catLabel = { PM: 'Prev. maintenance' };
-  const statusTag = { 'In progress': 'tag-progress', Completed: 'tag-completed', Scheduled: 'tag-scheduled', Cancelled: 'tag-scheduled' };
-  const dotClass  = { High: 'dot-high', Medium: 'dot-medium', Low: 'dot-low' };
-  const cardClass = { High: 'priority-high', Medium: 'priority-medium', Low: 'priority-low' };
+  const chargeTagClass = {
+    Internal:   'tag-internal',
+    Chargeable: 'tag-chargeable',
+    Contract:   'tag-contract',
+    Warranty:   'tag-warranty',
+    Free:       'tag-free',
+  };
 
-  el.innerHTML = jobs.map(j => `
-    <div class="job-card ${cardClass[j.priority] || ''}">
-      <div class="priority-dot ${dotClass[j.priority] || 'dot-medium'}"></div>
-      <div class="job-meta">
-        <div class="job-header">
-          <span class="job-num">${j.num}</span>
-          <span class="job-title">${j.title}</span>
+  el.innerHTML = jobs.map(j => {
+    const cardClass = j.isUrgent ? 'urgent' : j.isOverdue ? 'overdue' : 'normal';
+
+    let dueDateHtml = '';
+    if (j.dueDate) {
+      const days = daysUntil(j.dueDate);
+      if (days < 0)       dueDateHtml = `<div class="date-info overdue">Due ${Math.abs(days)}d ago (${j.dueDateRaw})</div>`;
+      else if (days === 0)dueDateHtml = `<div class="date-info overdue">Due today</div>`;
+      else if (days <= 7) dueDateHtml = `<div class="date-info due-soon">Due in ${days}d (${j.dueDateRaw})</div>`;
+      else                dueDateHtml = `<div class="date-info">Due ${j.dueDateRaw}</div>`;
+    }
+
+    const schedHtml = j.schedRaw
+      ? `<div class="date-info">Sched: ${j.schedRaw}</div>`
+      : `<div class="date-info not-sched">Not scheduled</div>`;
+
+    const techHtml = j.techs.length
+      ? j.techs.map(t => `<span class="tech-badge">${t}</span>`).join('')
+      : `<span class="tech-badge" style="color:var(--text-ter);font-style:italic">Unassigned</span>`;
+
+    const siteStr = j.site && j.site !== j.customer ? ` · ${j.site}` : '';
+
+    return `
+      <div class="job-card ${cardClass}">
+        <div class="job-meta">
+          <div class="job-header">
+            <span class="job-num">${j.num}</span>
+            <span class="job-title">${j.title}</span>
+          </div>
+          <div class="job-detail">${j.customer}${siteStr}</div>
+          <div class="job-tags">
+            <span class="tag ${chargeTagClass[j.charge]||'tag-status'}">${j.chargeRaw || j.charge}</span>
+            <span class="tag tag-status">${j.jobType}</span>
+            ${j.isUrgent  ? '<span class="tag tag-urgent">Urgent</span>'    : ''}
+            ${j.isOverdue ? '<span class="tag tag-overdue">Overdue</span>'  : ''}
+            ${j.isDueSoon && !j.isOverdue ? '<span class="tag tag-overdue">Due soon</span>' : ''}
+            ${j.unassigned? '<span class="tag tag-status" style="font-style:italic">Unassigned</span>' : ''}
+          </div>
         </div>
-        ${j.addr ? `<div class="job-addr">${j.addr}</div>` : ''}
-        <div class="job-tags">
-          ${j.cat ? `<span class="tag ${catTag[j.cat] || 'tag-scheduled'}">${catLabel[j.cat] || j.cat}</span>` : ''}
-          <span class="tag ${statusTag[j.status] || 'tag-scheduled'}">${j.status}</span>
-          ${j.priority === 'High' ? '<span class="tag tag-high">High priority</span>' : ''}
+        <div class="job-right">
+          <div class="tech-list">${techHtml}</div>
+          ${j.pm ? `<span class="pm-badge">PM: ${j.pm}</span>` : ''}
+          ${schedHtml}
+          ${dueDateHtml}
+          <div class="date-info">Created ${j.createdRaw}</div>
         </div>
-      </div>
-      <div class="job-right">
-        <span class="tech-badge">${j.tech}</span>
-        ${j.time ? `<span class="job-time">${j.time}</span>` : ''}
-        ${j.date ? `<span class="job-time" style="font-size:11px">${j.date}</span>` : ''}
-      </div>
-    </div>
-  `).join('');
+      </div>`;
+  }).join('');
 }
 </script>
 </body>
