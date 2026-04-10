@@ -1,0 +1,13 @@
+Job No,Title,Category,Technician,Scheduled Time,Scheduled Date,Site Address,Status,Priority
+JB-1042,HVAC compressor fault,Repair,Sam Rivera,07:30,10/04/2026,42 Quay St Auckland CBD,In progress,High
+JB-1043,Annual fire panel test,Testing,Jo Park,08:00,10/04/2026,7 Wyndham St Auckland,Scheduled,High
+JB-1044,Quarterly PM - chiller unit,Preventative Maintenance,Sam Rivera,09:00,10/04/2026,15 Fort St Auckland,Scheduled,Medium
+JB-1045,Electrical fault - switchboard,Repair,Mike Chen,09:30,10/04/2026,88 Victoria St W Auckland,Scheduled,High
+JB-1046,Emergency lighting test,Testing,Jo Park,10:00,10/04/2026,120 Greys Ave Auckland,Scheduled,Medium
+JB-1047,Pump seal replacement,Repair,Alex Torres,10:30,10/04/2026,3 Shortland St Auckland,In progress,Medium
+JB-1048,6-month PM - AHU bank,Preventative Maintenance,Mike Chen,11:00,10/04/2026,55 Symonds St Auckland,Scheduled,Low
+JB-1049,RCD trip test - level 3,Testing,Alex Torres,13:00,10/04/2026,200 Queen St Auckland,Scheduled,Low
+JB-1050,Cooling tower PM,Preventative Maintenance,Sam Rivera,14:00,10/04/2026,1 Commerce St Auckland,Completed,Medium
+JB-1051,Leak repair - AC unit,Repair,Jo Park,14:30,10/04/2026,30 Waihorotiu St Auckland,Scheduled,High
+JB-1052,BMS sensor calibration,Testing,Mike Chen,15:00,10/04/2026,22 Fanshawe St Auckland,In progress,Medium
+JB-1053,Monthly PM - generator,Preventative Maintenance,Alex Torres,15:30,10/04/2026,10 Jellicoe St Auckland,Scheduled,Low
